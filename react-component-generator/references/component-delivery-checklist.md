@@ -13,7 +13,8 @@ For placement/template/file decisions, see `SKILL.md`'s Execution workflow — t
 - [ ] `'use client'` handled correctly for this repo: absent entirely in non-RSC repos (Vite/CRA/plain SPA); in RSC-enabled repos (Next.js App Router etc.), present iff the file needs state, effects, refs, browser APIs, or event handlers.
 - [ ] No placeholders/TODOs, unused imports/variables/hooks left in the output.
 - [ ] No `React.FC` and no empty `Props` type left in the output.
-- [ ] Props destructured in the signature, except the documented props-controller exception.
+- [ ] Props destructured in the signature, except: more than 4 props (use `(props: Props)` + `props.x` access instead), or the documented props-controller exception.
+- [ ] `Props` fields and controller return fields both ordered value/data fields first, callback/handler fields last.
 - [ ] Loading/error/empty states use early returns, not nested ternaries; `count && <X/>` guarded as `count > 0 && <X/>`.
 - [ ] Tests assert behavior (not implementation details).
 - [ ] UI states owned by component are covered where relevant.

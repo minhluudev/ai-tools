@@ -10,12 +10,33 @@
 - Container (data/logic) vs. presentational (render only) split when a component both fetches and renders complex UI — not mandatory for small projects.
 - File name = component name, `PascalCase.tsx`.
 - Folder structure: group by feature/domain (`features/orders/{OrderList.tsx, useOrders.ts, orders-api.ts}`) once the app has several distinct domains, not by type (`components/`, `hooks/` mixing every feature together) — see the same rule in `javascript-typescript.md`. Small apps can stay type-grouped.
+- Import grouping: separate external package imports (`react`, `next`, npm dependencies) from project-internal imports (relative paths, path-alias imports like `~/`) into two distinct blocks, external first, with a blank line between them. Don't interleave the two groups line by line.
+  ```tsx
+  import { useState } from 'react';
+  import { useQuery } from '@tanstack/react-query';
+
+  import { UserAvatar } from '~/components/user-avatar';
+  import { useUsers } from './useUsers';
+  ```
 
 ## 1.1 Writing the component body
 
-- Destructure props in the function signature, not repeated `props.x` access:
+- Keep the component body ordered and readable: props/defaults and values used by the JSX first, handler/helper functions after that, and the `return` last. Don't mix declarations and functions in an arbitrary order.
+- For components with a small number of props, destructure them in the function signature:
   ```tsx
   function UserCard({ user, onSelect }: UserCardProps) { ... }
+  ```
+- For components with many props, keep the signature compact with `props: UserCardProps`, then access values through `props.x` where needed:
+  ```tsx
+  function UserCard(props: UserCardProps) {
+    const title = props.user.name;
+
+    function handleSelect() {
+      props.onSelect?.(props.user.id);
+    }
+
+    return <button onClick={handleSelect}>{title}</button>;
+  }
   ```
 - Default values via destructuring defaults (`{ size = 'md' }: Props`), not `defaultProps` (deprecated for function components).
 - Event handler naming: `handleX` for the function defined/used inside the component, `onX` for the prop a parent passes in (`onClick`, `onSubmit`).
@@ -87,6 +108,7 @@
   interface UserCardProps { user: User; onSelect?: (id: string) => void; }
   function UserCard({ user, onSelect }: UserCardProps) { ... }
   ```
+- Match the props style to the prop count: a short prop list can be destructured in the signature, but a long prop list should stay as `props: Props` to keep the signature compact and reduce noisy code.
 - No `any` for event handlers — use `React.ChangeEvent<HTMLInputElement>`, `React.MouseEvent<HTMLButtonElement>`, etc.
 - Define API response types once (`types/api.ts`), reuse between hook and component.
 - **Refs on React 19+**: accept `ref` as a normal prop, no `forwardRef` needed — `forwardRef` is deprecated for function components and slated for eventual removal.

@@ -20,7 +20,10 @@ For deciding which props a component should expose in the first place — prop-c
 - Create `type Props = {}` (or `interface Props` only if it needs to be extended/declaration-merged) only when props exist. Never `IProps` — no Hungarian prefix, per `coding-rules/references/reactjs.md` §6.
 - Do not `export` the `Props` type by default. Export it only when something outside `index.tsx` actually needs to import it — in practice, this means: the component has a `controller.ts` that imports it via `import type { Props } from "."` (see Controller conventions), or a parent/sibling file genuinely needs to reference the same shape. A component with no `controller.ts` and no external consumer of its prop shape keeps `type Props = {}` unexported.
 - Do not type the component with `React.FC<Props>`. Type the destructured parameter directly: `({ value }: Props) => {}`.
-- Destructure props in the function signature — no `props.x` access in the body — except the props-controller pattern below, where the whole `props` object is intentionally forwarded to `useController(props)`.
+- Destructure props in the function signature — no `props.x` access in the body — with two exceptions:
+  - **More than 4 props**: type the parameter as `(props: Props)` and access fields via `props.x` in the body instead of destructuring in the signature. Keeps the signature readable once the list grows past a handful of fields.
+  - The props-controller pattern below, where the whole `props` object is intentionally forwarded to `useController(props)` regardless of count.
+- Order fields in `Props` (and in the destructured signature, when destructuring): plain value/data fields first, callback/event-handler fields (`onX`) last. Don't interleave them.
 - Required props: no `?`.
 - Optional props: use `?`.
 - Add `children?: React.ReactNode` only when children are rendered.
@@ -47,12 +50,14 @@ When `controller.ts` calls `useQuery`/`useMutation`, handle the error state expl
 - Import `Props` from `./index` (`import type { Props } from "."`) — this is the case that requires `index.tsx` to `export type Props` (see Props conventions above); a no-props controller needs no `Props` export at all.
 - Pass the full `props` object to `useController(props)` unless local repo style says otherwise — this is the one deliberate exception to destructuring props in the component signature (see Props conventions above).
 - Return only values used by the view.
+- Order the returned object's fields the same way as `Props`: state/derived values first, handler functions last (for example `return { derivedValue, isLoading, error, handleAction };`).
 
 ## Import conventions
 
 - Same folder: relative imports (`./controller`, `./style.module.css`).
 - Sibling component (e.g. importing a component split out under "Split when too large"): `~/` alias when configured, otherwise relative (`../<kebab-case-name>`).
 - Cross-module: use `~/` alias when configured.
+- Group external package imports separate from project-internal imports (relative paths, `~/` alias) — external first, blank line between the two groups, never interleaved. See `coding-rules/references/reactjs.md` §1 for the exact convention; this skill doesn't restate it, just follows it.
 - Use `import type` for type-only imports.
 - Reusable components that need to accept a DOM ref from the parent (inputs, buttons, wrappers around native elements) should accept `ref` as a normal prop (React 19+) or use `forwardRef` on React 18 codebases — check which the repo targets before generating.
 
