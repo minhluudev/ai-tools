@@ -559,4 +559,16 @@ test("loadSelectionCatalog includes curated local skills in installer choices", 
       targets: undefined
     }
   );
+
+  assert.deepEqual(
+    catalog.skills.find((skill) => skill.id === "vercel-react-best-practices"),
+    {
+      id: "vercel-react-best-practices",
+      label: "Vercel React Best Practices",
+      description: "React and Next.js performance optimization guidelines from Vercel Engineering — 70 rules across waterfalls, bundle size, server/client rendering, re-renders, and JS performance.",
+      sourceBranch: "agent-skills",
+      sourcePath: "vercel-react-best-practices",
+      targets: undefined
+    }
+  );
 });
