@@ -513,13 +513,13 @@ test("loadSelectionCatalog includes curated local skills in installer choices", 
   );
 
   assert.deepEqual(
-    catalog.skills.find((skill) => skill.id === "make-task"),
+    catalog.skills.find((skill) => skill.id === "task-creator"),
     {
-      id: "make-task",
-      label: "Make Task",
-      description: "Create or update structured task documents from Jira, Trello, Notion, Linear, GitHub Issues, or plain descriptions.",
+      id: "task-creator",
+      label: "Task Creator",
+      description: "Draft and push tasks/tickets to Jira, Trello, Notion, Linear, Asana, monday.com, or a local file, with an objective estimate and user review before creation.",
       sourceBranch: "agent-skills",
-      sourcePath: "make-task",
+      sourcePath: "task-creator",
       targets: undefined
     }
   );
