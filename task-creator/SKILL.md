@@ -1,6 +1,8 @@
 ---
 name: task-creator
 description: Use when the user wants to create, draft, or push a task/ticket/issue to a task management tool (Jira, Trello, Notion, Linear, Asana, monday.com, etc.), or wants it recorded locally when no such tool is available. Trigger on phrases like "create a task/ticket/issue", "log this as a task", "push this to Jira/Notion/Trello", or when the user describes a bug/feature/piece of work that needs to be tracked — even without using the word "task".
+metadata:
+  author: Minh Luu
 ---
 
 # Task Creator

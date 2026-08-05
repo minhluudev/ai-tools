@@ -1,6 +1,8 @@
 ---
 name: react-component-generator
 description: Use when the user asks to create or refactor a small-to-medium React component or UI block, for this repository's `components/**` layout.
+metadata:
+  author: Minh Luu
 ---
 
 # React Component Generator
