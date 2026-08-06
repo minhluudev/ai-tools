@@ -2,6 +2,8 @@
 
 Ba ví dụ dưới đây minh họa cách áp dụng template ở `assets/task_template.md` và bảng estimate ở SKILL.md cho 3 mức độ phức tạp khác nhau (S, M, L). Dùng làm tham chiếu khi soạn task thật, không copy nguyên văn nội dung nghiệp vụ — chỉ học theo cách cấu trúc, mức độ chi tiết, và cách suy luận estimate.
 
+**Lưu ý về văn phong:** các ví dụ dưới đây có phần Bối cảnh/Phạm vi chỉnh sửa dùng tên API, service, bảng dữ liệu cụ thể để minh hoạ mức độ chi tiết kỹ thuật cần có. Theo nguyên tắc mặc định hiện tại của skill (xem SKILL.md), khi soạn task thật hãy viết các phần Bối cảnh, Vấn đề hiện tại, Mong muốn, Mục đích, và Phạm vi chỉnh sửa theo văn phong nghiệp vụ (BA) — mô tả luồng/tính năng/tác động nghiệp vụ, không nêu tên file/class/hàm — trừ khi người dùng yêu cầu mô tả kỹ thuật. Chỉ giữ lại cách suy luận độ phức tạp và estimate từ các ví dụ này, không copy nguyên văn cách diễn đạt kỹ thuật trong Phạm vi chỉnh sửa.
+
 ---
 
 ## Ví dụ 1 — Task nhỏ (S): Bug hiển thị sai số dư
